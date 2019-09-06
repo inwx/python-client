@@ -1,0 +1,10 @@
+# IDE specific
+.idea/
+nbproject/
+.vscode/
+build/
+nbbuild/
+dist/
+
+# Python specific
+venv/
