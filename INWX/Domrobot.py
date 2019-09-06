@@ -18,7 +18,7 @@ class ApiType(Enum):
 
 
 class ApiClient:
-    CLIENT_VERSION = '2.0'
+    CLIENT_VERSION = '3.0'
     API_LIVE_URL = 'https://api.domrobot.com'
     API_OTE_URL = 'https://api.ote.domrobot.com'
 
