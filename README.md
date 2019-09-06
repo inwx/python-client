@@ -4,7 +4,7 @@
   </a>
 </p>
 
-INWX Domrobot Python3 Client
+INWX Domrobot Python 3 Client
 =========
 You can access all functions of our frontend via our API, which is available via the XML-RPC or JSON-RPC protocol and thus can be easily consumed with all programming languages.
 
