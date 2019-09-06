@@ -17,8 +17,8 @@ class ApiType(Enum):
     JSON_RPC = '/jsonrpc/'
 
 
-class Domrobot:
-    CLIENT_VERSION = '2.0'
+class ApiClient:
+    CLIENT_VERSION = '3.0'
     API_LIVE_URL = 'https://api.domrobot.com'
     API_OTE_URL = 'https://api.ote.domrobot.com'
 
@@ -117,7 +117,7 @@ class Domrobot:
 
         headers = {
             'Content-Type': 'text/xml',
-            'User-Agent': 'DomRobot/' + Domrobot.CLIENT_VERSION + ' (Python ' + self.get_python_version() + ')'
+            'User-Agent': 'DomRobot/' + ApiClient.CLIENT_VERSION + ' (Python ' + self.get_python_version() + ')'
         }
 
         response = self.api_session.post(self.api_url + self.api_type.value, data=payload, headers=headers)
