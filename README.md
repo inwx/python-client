@@ -18,8 +18,13 @@ If you still experience any kind of problems don't hesitate to contact our [supp
 
 Installation
 -------
-the recommended way is via pip:
+The recommended way is via pip:
 
+```bash
+pip install inwx-domrobot
+```
+
+You can find more information about the package on [pypi.org](https://pypi.org/project/inwx-domrobot).
 
 Example
 -------
@@ -54,7 +59,7 @@ else:
     raise Exception('Api login error. Code: ' + login_result['code'] + '  Message: ' + login_result['msg'])
 ```
 
-You can also have a look at the example folder in the project for even more info.
+You can also have a look at the [example folder](INWX/examples) in the project for even more info.
 
 License
 ----
