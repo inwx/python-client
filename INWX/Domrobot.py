@@ -51,6 +51,8 @@ class ApiClient:
                 the code/string encoded in the QR-Code you scanned with your google authenticator app when you enabled 2fa.
                 If you don't have this secret anymore, disable and re-enable 2fa for your account but this time save the
                 code/string encoded in the QR-Code.
+        Returns:
+            The api response body parsed as a dict.
         Raises:
             Exception: Username and password must not be None.
             Exception: Api requests two factor challenge but no shared secret is given. Aborting.
@@ -79,7 +81,11 @@ class ApiClient:
         return login_result
 
     def logout(self):
-        """Logs out the user and destroys the session."""
+        """Logs out the user and destroys the session.
+
+        Returns:
+            The api response body parsed as a dict.
+        """
 
         logout_result = self.call_api('account.logout')
         self.api_session.close()
