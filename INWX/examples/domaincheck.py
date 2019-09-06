@@ -1,4 +1,4 @@
-from domrobot import Domrobot
+from INWX.Domrobot import Domrobot
 
 username = ''
 password = ''
