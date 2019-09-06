@@ -52,11 +52,11 @@ if login_result['code'] == 1000:
             print('Unfortunately, ' + domain + ' is already registered.')
 
     else:
-        raise Exception('Api error while checking domain status. Code: ' + domain_check_result['code']
+        raise Exception('Api error while checking domain status. Code: ' + str(domain_check_result['code'])
                         + '  Message: ' + domain_check_result['msg'])
     api_client.logout()
 else:
-    raise Exception('Api login error. Code: ' + login_result['code'] + '  Message: ' + login_result['msg'])
+    raise Exception('Api login error. Code: ' + str(login_result['code']) + '  Message: ' + login_result['msg'])
 ```
 
 You can also have a look at the [example folder](INWX/examples) in the project for even more info.
