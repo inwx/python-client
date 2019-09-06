@@ -26,11 +26,11 @@ class Domrobot:
                  debug_mode=False):
         """
         Args:
-            api_url: url of the api
-            api_type: type of the api. See ApiType class for all types.
-            language: language for api messages and error codes in responses
-            client_transaction_id: sent with every request to distinguish your api requests in case you need support
-            debug_mode: whether requests and responses should be printed out
+            api_url: Url of the api.
+            api_type: Type of the api. See ApiType class for all types.
+            language: Language for api messages and error codes in responses.
+            client_transaction_id: Sent with every request to distinguish your api requests in case you need support.
+            debug_mode: Whether requests and responses should be printed out.
         """
 
         self.api_url = api_url
@@ -52,12 +52,12 @@ class Domrobot:
                 If you don't have this secret anymore, disable and re-enable 2fa for your account but this time save the
                 code/string encoded in the QR-Code.
         Raises:
-            Exception: Username and password must not be None
+            Exception: Username and password must not be None.
             Exception: Api requests two factor challenge but no shared secret is given. Aborting.
         """
 
         if username is None or password is None:
-            raise Exception('Username and password must not be None')
+            raise Exception('Username and password must not be None.')
 
         self.api_session = requests.Session()
 
@@ -80,6 +80,7 @@ class Domrobot:
 
     def logout(self):
         """Logs out the user and destroys the session."""
+
         logout_result = self.call_api('account.logout')
         self.api_session.close()
         return logout_result
@@ -93,12 +94,12 @@ class Domrobot:
         Returns:
             The api response body parsed as a dict.
         Raises:
-            Exception: Api method must not be None
-            Exception: Invalid ApiType
+            Exception: Api method must not be None.
+            Exception: Invalid ApiType.
         """
 
         if api_method is None:
-            raise Exception('Api method must not be None')
+            raise Exception('Api method must not be None.')
         if method_params is None:
             method_params = {}
 
@@ -112,7 +113,7 @@ class Domrobot:
         elif self.api_type == ApiType.JSON_RPC:
             payload = str(json.dumps({'method': api_method, 'params': method_params}))
         else:
-            raise Exception('Invalid ApiType')
+            raise Exception('Invalid ApiType.')
 
         headers = {
             'Content-Type': 'text/xml',
@@ -139,11 +140,11 @@ class Domrobot:
         Returns:
             A secret code used to solve 2fa challenges.
         Raises:
-            Exception: Shared secret must not be None
+            Exception: Shared secret must not be None.
         """
 
         if shared_secret is None:
-            raise Exception('Shared secret must not be None')
+            raise Exception('Shared secret must not be None.')
 
         key = base64.b32decode(shared_secret, True)
         msg = struct.pack(">Q", int(time.time()) // 30)
