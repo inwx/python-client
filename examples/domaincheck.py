@@ -4,9 +4,11 @@ username = ''
 password = ''
 domain = 'my-test-domain-which-is-definitely-not-registered6737.com'
 
-# By default you talk with the test api (OT&E). If you want to talk with the production/live api
+# By default you Domrobot uses the test api (OT&E). If you want to use the production/live api
 # we have a constant named API_LIVE_URL in the Domrobot class. Just set api_url=Domrobot.API_LIVE_URL and you're good.
+# You can also choose between XML-RPC and JSON-RPC by setting api_type=ApiType.XML_RPC or api_type=ApiType.JSON_RPC
 domrobot = Domrobot(api_url=Domrobot.API_OTE_URL, debug_mode=True)
+
 # If you have 2fa enabled, take a look at the documentation of the Domrobot#login method to get further
 # information about the login, especially the shared_secret parameter.
 login_result = domrobot.login(username, password)
@@ -15,7 +17,7 @@ login_result = domrobot.login(username, password)
 if login_result['code'] == 1000:
 
     # Make an api call and save the result in a variable.
-    # We want some more information of our declared domain, so we call the api method 'domain.check'.
+    # We want to check if a domain is available, so we call the api method 'domain.check'.
     # Domrobot#call_api returns the api response as a dict.
     domain_check_result = domrobot.call_api(api_method='domain.check', method_params={'domain': domain})
 
