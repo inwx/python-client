@@ -70,7 +70,7 @@ class ApiClient:
         }
 
         login_result = self.call_api('account.login', params)
-        if 'tfa' in login_result['resData'] and login_result['resData']['tfa'] != '0' and login_result['code'] == 1000:
+        if login_result['code'] == 1000 and 'tfa' in login_result['resData'] and login_result['resData']['tfa'] != '0':
             if shared_secret is None:
                 raise Exception('Api requests two factor challenge but no shared secret is given. Aborting.')
             secret_code = self.get_secret_code(shared_secret)
