@@ -39,7 +39,7 @@ class ApiClient:
         self.client_transaction_id = client_transaction_id
         self.debug_mode = debug_mode
         self.customer = None
-        self.api_session = None
+        self.api_session = requests.Session()
 
     def login(self, username, password, shared_secret=None):
         """Performs a login at the api and saves the session cookie for following api calls.
@@ -60,8 +60,6 @@ class ApiClient:
 
         if username is None or password is None:
             raise Exception('Username and password must not be None.')
-
-        self.api_session = requests.Session()
 
         params = {
             'lang': self.language,
@@ -89,6 +87,7 @@ class ApiClient:
 
         logout_result = self.call_api('account.logout')
         self.api_session.close()
+        self.api_session = requests.Session()
         return logout_result
 
     def call_api(self, api_method, method_params=None):
