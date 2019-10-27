@@ -121,11 +121,11 @@ class ApiClient:
             raise Exception('Invalid ApiType.')
 
         headers = {
-            'Content-Type': 'text/xml',
+            'Content-Type': 'text/xml; charset=UTF-8',
             'User-Agent': 'DomRobot/' + ApiClient.CLIENT_VERSION + ' (Python ' + self.get_python_version() + ')'
         }
 
-        response = self.api_session.post(self.api_url + self.api_type.value, data=payload, headers=headers)
+        response = self.api_session.post(self.api_url + self.api_type.value, data=payload.encode('UTF-8'), headers=headers)
 
         if self.debug_mode:
             print('Request (' + api_method + '): ' + payload)
