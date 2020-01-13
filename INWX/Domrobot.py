@@ -2,14 +2,15 @@ import base64
 import hashlib
 import hmac
 import json
+import random
+import string
 import struct
 import sys
 import time
-import random
-import string
-import requests
 import xmlrpc.client
 from enum import Enum
+
+import requests
 
 
 class ApiType(Enum):
@@ -125,7 +126,8 @@ class ApiClient:
             'User-Agent': 'DomRobot/' + ApiClient.CLIENT_VERSION + ' (Python ' + self.get_python_version() + ')'
         }
 
-        response = self.api_session.post(self.api_url + self.api_type.value, data=payload.encode('UTF-8'), headers=headers)
+        response = self.api_session.post(self.api_url + self.api_type.value, data=payload.encode('UTF-8'),
+                                         headers=headers)
 
         if self.debug_mode:
             print('Request (' + api_method + '): ' + payload)
