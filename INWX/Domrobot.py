@@ -128,6 +128,7 @@ class ApiClient:
 
         response = self.api_session.post(self.api_url + self.api_type.value, data=payload.encode('UTF-8'),
                                          headers=headers)
+        response.raise_for_status()
 
         if self.debug_mode:
             print('Request (' + api_method + '): ' + payload)
