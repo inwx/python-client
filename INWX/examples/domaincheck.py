@@ -4,7 +4,7 @@ username = ''
 password = ''
 domain = 'my-test-domain-which-is-definitely-not-registered6737.com'
 
-# By default you ApiClient uses the test api (OT&E). If you want to use the production/live api
+# By default the ApiClient uses the test api (OT&E). If you want to use the production/live api
 # we have a constant named API_LIVE_URL in the ApiClient class. Just set api_url=ApiClient.API_LIVE_URL and you're good.
 # You can also choose between XML-RPC and JSON-RPC by setting api_type=ApiType.XML_RPC or api_type=ApiType.JSON_RPC
 api_client = ApiClient(api_url=ApiClient.API_OTE_URL, debug_mode=True)
