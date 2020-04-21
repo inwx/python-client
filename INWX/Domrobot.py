@@ -7,19 +7,25 @@ import string
 import struct
 import sys
 import time
-import xmlrpc.client
-from enum import Enum
 
 import requests
 
+if sys.version_info.major == 3:
+    import xmlrpc.client
+else:
+    import xmlrpclib
 
-class ApiType(Enum):
+
+class ApiType:
     XML_RPC = '/xmlrpc/'
     JSON_RPC = '/jsonrpc/'
 
+    def __init__(self):
+        pass
+
 
 class ApiClient:
-    CLIENT_VERSION = '3.0.6'
+    CLIENT_VERSION = '3.1.0'
     API_LIVE_URL = 'https://api.domrobot.com'
     API_OTE_URL = 'https://api.ote.domrobot.com'
 
@@ -115,7 +121,10 @@ class ApiClient:
             method_params['clTRID'] = self.client_transaction_id
 
         if self.api_type == ApiType.XML_RPC:
-            payload = xmlrpc.client.dumps((method_params,), api_method, encoding='UTF-8').replace('\n', '')
+            if sys.version_info.major == 3:
+                payload = xmlrpc.client.dumps((method_params,), api_method, encoding='UTF-8').replace('\n', '')
+            else:
+                payload = xmlrpclib.dumps((method_params,), api_method, encoding='UTF-8').replace('\n', '')
         elif self.api_type == ApiType.JSON_RPC:
             payload = str(json.dumps({'method': api_method, 'params': method_params}))
         else:
@@ -126,7 +135,7 @@ class ApiClient:
             'User-Agent': 'DomRobot/' + ApiClient.CLIENT_VERSION + ' (Python ' + self.get_python_version() + ')'
         }
 
-        response = self.api_session.post(self.api_url + self.api_type.value, data=payload.encode('UTF-8'),
+        response = self.api_session.post(self.api_url + self.api_type, data=payload.encode('UTF-8'),
                                          headers=headers)
         response.raise_for_status()
 
@@ -135,7 +144,10 @@ class ApiClient:
             print('Response (' + api_method + '): ' + response.text)
 
         if self.api_type == ApiType.XML_RPC:
-            return xmlrpc.client.loads(response.text)[0][0]
+            if sys.version_info.major == 3:
+                return xmlrpc.client.loads(response.text)[0][0]
+            else:
+                return xmlrpclib.loads(response.text)[0][0]
         elif self.api_type == ApiType.JSON_RPC:
             return response.json()
 

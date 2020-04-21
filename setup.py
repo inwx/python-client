@@ -1,6 +1,6 @@
 import setuptools
 
-version = '3.0.6'
+version = '3.1.0'
 
 with open("requirements.txt", "r") as fh:
     install_requires = fh.read()
@@ -26,6 +26,7 @@ setuptools.setup(
         'Intended Audience :: Developers',
         'Topic :: Software Development',
         'License :: OSI Approved :: MIT License',
+        'Programming Language :: Python :: 2.7',
         'Programming Language :: Python :: 3',
         'Programming Language :: Python :: 3.4',
         'Programming Language :: Python :: 3.5',
