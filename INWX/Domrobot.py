@@ -130,8 +130,9 @@ class ApiClient:
         else:
             raise Exception('Invalid ApiType.')
 
+        request_mime_type = 'application/json' if self.api_type == ApiType.JSON_RPC else 'text/xml'
         headers = {
-            'Content-Type': 'text/xml; charset=UTF-8',
+            'Content-Type': '{}; charset=UTF-8'.format(request_mime_type),
             'User-Agent': 'DomRobot/' + ApiClient.CLIENT_VERSION + ' (Python ' + self.get_python_version() + ')'
         }
 
