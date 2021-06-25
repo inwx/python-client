@@ -26,8 +26,8 @@ class ApiClient:
     API_LIVE_URL = 'https://api.domrobot.com'
     API_OTE_URL = 'https://api.ote.domrobot.com'
 
-    def __init__(self, api_url=API_OTE_URL, api_type=ApiType.XML_RPC, language='en', client_transaction_id=None,
-                 debug_mode=False):
+    def __init__(self, api_url: str = API_OTE_URL, api_type=ApiType.XML_RPC, language: str = 'en',
+                 client_transaction_id: str = None, debug_mode: bool = False):
         """
         Args:
             api_url: Url of the api.
@@ -45,7 +45,7 @@ class ApiClient:
         self.customer = None
         self.api_session = requests.Session()
 
-    def login(self, username, password, shared_secret=None):
+    def login(self, username: str, password: str, shared_secret: str = None) -> dict:
         """Performs a login at the api and saves the session cookie for following api calls.
 
         Args:
@@ -94,7 +94,7 @@ class ApiClient:
         self.api_session = requests.Session()
         return logout_result
 
-    def call_api(self, api_method, method_params=None):
+    def call_api(self, api_method: str, method_params: dict = None) -> dict:
         """Makes an api call.
 
         Args:
@@ -144,7 +144,7 @@ class ApiClient:
             return response.json()
 
     @staticmethod
-    def get_secret_code(shared_secret):
+    def get_secret_code(shared_secret: str) -> str:
         """Generates a secret code for 2fa with a shared secret.
 
         Args:
@@ -166,9 +166,9 @@ class ApiClient:
         return hmac_hash
 
     @staticmethod
-    def get_random_string(size=12):
+    def get_random_string(size: int = 12) -> str:
         return ''.join(random.choice(string.ascii_letters + string.digits) for x in range(size))
 
     @staticmethod
-    def get_python_version():
+    def get_python_version() -> str:
         return '.'.join(tuple(str(x) for x in sys.version_info))
