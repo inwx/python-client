@@ -10,10 +10,7 @@ import time
 
 import requests
 
-if sys.version_info.major == 3:
-    import xmlrpc.client
-else:
-    import xmlrpclib
+import xmlrpc.client
 
 
 class ApiType:
@@ -121,10 +118,7 @@ class ApiClient:
             method_params['clTRID'] = self.client_transaction_id
 
         if self.api_type == ApiType.XML_RPC:
-            if sys.version_info.major == 3:
-                payload = xmlrpc.client.dumps((method_params,), api_method, encoding='UTF-8').replace('\n', '')
-            else:
-                payload = xmlrpclib.dumps((method_params,), api_method, encoding='UTF-8').replace('\n', '')
+            payload = xmlrpc.client.dumps((method_params,), api_method, encoding='UTF-8').replace('\n', '')
         elif self.api_type == ApiType.JSON_RPC:
             payload = str(json.dumps({'method': api_method, 'params': method_params}))
         else:
@@ -145,10 +139,7 @@ class ApiClient:
             print('Response (' + api_method + '): ' + response.text)
 
         if self.api_type == ApiType.XML_RPC:
-            if sys.version_info.major == 3:
-                return xmlrpc.client.loads(response.text)[0][0]
-            else:
-                return xmlrpclib.loads(response.text)[0][0]
+            return xmlrpc.client.loads(response.text)[0][0]
         elif self.api_type == ApiType.JSON_RPC:
             return response.json()
 
