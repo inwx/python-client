@@ -10,10 +10,7 @@ import time
 
 import requests
 
-if sys.version_info.major == 3:
-    import xmlrpc.client
-else:
-    import xmlrpclib
+import xmlrpc.client
 
 
 class ApiType:
@@ -29,8 +26,8 @@ class ApiClient:
     API_LIVE_URL = 'https://api.domrobot.com'
     API_OTE_URL = 'https://api.ote.domrobot.com'
 
-    def __init__(self, api_url=API_OTE_URL, api_type=ApiType.XML_RPC, language='en', client_transaction_id=None,
-                 debug_mode=False):
+    def __init__(self, api_url: str = API_OTE_URL, api_type=ApiType.XML_RPC, language: str = 'en',
+                 client_transaction_id: str = None, debug_mode: bool = False):
         """
         Args:
             api_url: Url of the api.
@@ -48,7 +45,7 @@ class ApiClient:
         self.customer = None
         self.api_session = requests.Session()
 
-    def login(self, username, password, shared_secret=None):
+    def login(self, username: str, password: str, shared_secret: str = None) -> dict:
         """Performs a login at the api and saves the session cookie for following api calls.
 
         Args:
@@ -97,7 +94,7 @@ class ApiClient:
         self.api_session = requests.Session()
         return logout_result
 
-    def call_api(self, api_method, method_params=None):
+    def call_api(self, api_method: str, method_params: dict = None) -> dict:
         """Makes an api call.
 
         Args:
@@ -121,10 +118,7 @@ class ApiClient:
             method_params['clTRID'] = self.client_transaction_id
 
         if self.api_type == ApiType.XML_RPC:
-            if sys.version_info.major == 3:
-                payload = xmlrpc.client.dumps((method_params,), api_method, encoding='UTF-8').replace('\n', '')
-            else:
-                payload = xmlrpclib.dumps((method_params,), api_method, encoding='UTF-8').replace('\n', '')
+            payload = xmlrpc.client.dumps((method_params,), api_method, encoding='UTF-8').replace('\n', '')
         elif self.api_type == ApiType.JSON_RPC:
             payload = str(json.dumps({'method': api_method, 'params': method_params}))
         else:
@@ -145,15 +139,12 @@ class ApiClient:
             print('Response (' + api_method + '): ' + response.text)
 
         if self.api_type == ApiType.XML_RPC:
-            if sys.version_info.major == 3:
-                return xmlrpc.client.loads(response.text)[0][0]
-            else:
-                return xmlrpclib.loads(response.text)[0][0]
+            return xmlrpc.client.loads(response.text)[0][0]
         elif self.api_type == ApiType.JSON_RPC:
             return response.json()
 
     @staticmethod
-    def get_secret_code(shared_secret):
+    def get_secret_code(shared_secret: str) -> str:
         """Generates a secret code for 2fa with a shared secret.
 
         Args:
@@ -175,9 +166,9 @@ class ApiClient:
         return hmac_hash
 
     @staticmethod
-    def get_random_string(size=12):
+    def get_random_string(size: int = 12) -> str:
         return ''.join(random.choice(string.ascii_letters + string.digits) for x in range(size))
 
     @staticmethod
-    def get_python_version():
+    def get_python_version() -> str:
         return '.'.join(tuple(str(x) for x in sys.version_info))
