@@ -161,7 +161,10 @@ class ApiClient:
         key = base64.b32decode(shared_secret, True)
         msg = struct.pack(">Q", int(time.time()) // 30)
         hmac_hash = hmac.new(key, msg, hashlib.sha1).digest()
-        o = hmac_hash[19] & 15
+        if sys.version_info.major == 3:
+            o = hmac_hash[19] & 15
+        else:
+            o = ord(hmac_hash[19]) & 15
         hmac_hash = (struct.unpack(">I", hmac_hash[o:o + 4])[0] & 0x7fffffff) % 1000000
         return hmac_hash
 
