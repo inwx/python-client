@@ -22,7 +22,7 @@ class ApiType:
 
 
 class ApiClient:
-    CLIENT_VERSION = '3.1.0'
+    CLIENT_VERSION = '3.1.1'
     API_LIVE_URL = 'https://api.domrobot.com'
     API_OTE_URL = 'https://api.ote.domrobot.com'
 
