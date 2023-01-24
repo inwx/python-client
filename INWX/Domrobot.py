@@ -45,7 +45,7 @@ class ApiClient:
         self.customer = None
         self.api_session = requests.Session()
 
-    def login(self, username: str, password: str, secret_code: str = None) -> dict:
+    def login(self, username: str, password: str, secret_code: int = None) -> dict:
         """Performs a login at the api and saves the session cookie for following api calls.
 
         Args:
