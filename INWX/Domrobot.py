@@ -45,16 +45,13 @@ class ApiClient:
         self.customer = None
         self.api_session = requests.Session()
 
-    def login(self, username: str, password: str, shared_secret: str = None) -> dict:
+    def login(self, username: str, password: str, secret_code: str = None) -> dict:
         """Performs a login at the api and saves the session cookie for following api calls.
 
         Args:
             username: Your username.
             password: Your password.
-            shared_secret: A secret used to generate a secret code to solve 2fa challenges when 2fa is enabled. This is
-                the code/string encoded in the QR-Code you scanned with your google authenticator app when you enabled 2fa.
-                If you don't have this secret anymore, disable and re-enable 2fa for your account but this time save the
-                code/string encoded in the QR-Code.
+            secret_code: The only temporarily valid secret code based on the shared secret. The code can be send via the app.
         Returns:
             The api response body parsed as a dict.
         Raises:
@@ -73,9 +70,8 @@ class ApiClient:
 
         login_result = self.call_api('account.login', params)
         if login_result['code'] == 1000 and 'tfa' in login_result['resData'] and login_result['resData']['tfa'] != '0':
-            if shared_secret is None:
+            if secret_code is None:
                 raise Exception('Api requests two factor challenge but no shared secret is given. Aborting.')
-            secret_code = self.get_secret_code(shared_secret)
             unlock_result = self.call_api('account.unlock', {'tan': secret_code})
             if unlock_result['code'] != 1000:
                 return unlock_result

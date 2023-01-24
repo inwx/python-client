@@ -10,7 +10,7 @@ domain = 'my-test-domain-which-is-definitely-not-registered6737.com'
 api_client = ApiClient(api_url=ApiClient.API_OTE_URL, debug_mode=True)
 
 # If you have 2fa enabled, take a look at the documentation of the ApiClient#login method to get further
-# information about the login, especially the shared_secret parameter.
+# information about the login, especially the secret_code parameter.
 login_result = api_client.login(username, password)
 
 # login was successful
