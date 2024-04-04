@@ -1,6 +1,6 @@
 import setuptools
 
-version = '3.1.0'
+version = '3.2.0'
 
 with open("requirements.txt", "r") as fh:
     install_requires = fh.read()
